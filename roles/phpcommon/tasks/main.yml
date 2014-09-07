@@ -1,0 +1,2 @@
+- name: Install Box
+  shell: curl -LSs http://box-project.org/installer.php | php && mv box.phar /usr/local/bin/box creates=/usr/local/bin/box

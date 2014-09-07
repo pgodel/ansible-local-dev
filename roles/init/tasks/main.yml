@@ -1,0 +1,11 @@
+---
+- name: Install homebrew 
+  shell: ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)" creates=/usr/local/bin/brew
+
+- name: Install Homebrew packages
+  sudo: no
+  homebrew: name=ssh-copy-id state=present
+
+- name: Install Liip OSX PHP
+  shell: curl -s http://php-osx.liip.ch/install.sh | bash -s 5.6 creates=/usr/local/php5/bin/php
+
