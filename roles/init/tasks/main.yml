@@ -4,7 +4,26 @@
 
 - name: Install Homebrew packages
   sudo: no
-  homebrew: name=ssh-copy-id state=present
+  homebrew: name= state=present
+  with_items:
+    - wget
+    - git
+    - tmux
+    - ssh-copy-id
+    - brew-cask
+
+- name: Check for installed apps
+  sudo: no
+  shell: brew cask list | grep {{item}}
+  register: installed_applications
+  with_items: applications
+  ignore_errors: true
+
+- name: Install apps with brew-cask
+  sudo: no
+  shell: brew cask install {{item}}
+  with_items: applications
+  when: item not in installed_applications.results|map(attribute='stdout')
 
 - name: Install Liip OSX PHP
   shell: curl -s http://php-osx.liip.ch/install.sh | bash -s 5.6 creates=/usr/local/php5/bin/php

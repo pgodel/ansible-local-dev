@@ -1,7 +1,22 @@
 ---
-- hosts: 127.0.0.1
+- hosts: all
   connection: local
   sudo: true
+  vars:
+    home: /Users/pgodel # Your ~/
+    src_home: /Users/pgodel/src # Where your code lives
+    applications: # .dmg, .app, .zip type applications via brew-cask
+      - google-chrome
+      - firefox
+      - sublime-text
+      - virtualbox
+      - vagrant
+      - boot2docker
+      - phpstorm
+      - adium
+      - iterm2
+      - licecap
+      - limechat
   roles:
     - init
     - composer
