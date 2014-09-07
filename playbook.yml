@@ -17,6 +17,7 @@
       - iterm2
       - licecap
       - limechat
+      - alfred
   roles:
     - init
     - composer
