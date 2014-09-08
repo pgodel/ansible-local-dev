@@ -1,0 +1,26 @@
+---
+- name: Install homebrew 
+  shell: ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)" creates=/usr/local/bin/brew
+
+- name: Install Homebrew packages
+  sudo: no
+  homebrew: name= state=present
+  with_items:
+    - wget
+    - git
+    - tmux
+    - ssh-copy-id
+    - brew-cask
+
+- name: Check for installed apps
+  sudo: no
+  shell: brew cask list | grep {{item}}
+  register: installed_applications
+  with_items: applications
+  ignore_errors: true
+
+- name: Install apps with brew-cask
+  sudo: no
+  shell: brew cask install {{item}}
+  with_items: applications
+  when: item not in installed_applications.results|map(attribute='stdout')
